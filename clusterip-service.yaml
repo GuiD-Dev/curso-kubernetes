@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pode
+  labels:
+    nome: web-app
+
+spec:
+  containers:
+      - name: web-server-apache
+        image: httpd
+        ports:
+          - containerPort: 80
+      - name: web-server-tomcat
+        image: tomcat
+        ports:
+          - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-clusterip
+
+spec:
+  type: ClusterIP
+  selector:
+    nome: web-app
+  ports:
+    - name: regra-redirecionamento
+      port: 80 # chega na porta 80
+      targetPort: 8080 # encaminha para o pod rodando na porta 80

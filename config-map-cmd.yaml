@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: config-map-cmd
+  namespace: default
+  
+data:
+  # Essas variáveis vão ser inseridas no ambiente do container dentro do pod
+  database: mysql
+  database_uri: mysql://localhost:3306
+
+---
+
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: pod-env-cmd
+
+spec:
+  containers:
+    - name: test-container
+      image: nginx
+      envFrom:
+        - configMapRef:
+            name: config-map-cmd
+      
+      command:
+        - bin/sh
+        - -c
+        - echo My Database = $database - $database_uri
+
+  restartPolicy: Never  # para ser executado apenas uma vez

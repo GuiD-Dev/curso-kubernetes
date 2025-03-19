@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+
+metadata:
+  name: my-job
+
+spec:
+  template:
+    metadata:
+      name: my-job-pod
+    spec:
+      containers:
+        - name:  container-busybox
+          image: busybox
+          command:
+            - bin/sh
+            - -c
+            - for i in 1 2; do echo Lucky number $i = $((1 + RANDOM % 70)); done
+      restartPolicy: Never # posso usar apenas "OnFailure" ou "Never"
+
+  completions: 10  # número de execuções que serão feitas pelo Job (cria um pod para cada execução)
+  completionMode: Indexed  # ao criar os pods, coloca um indice número no nome deles para facilitar a organização
+  parallelism: 3  # número de pods que são instanciados ao mesmo tempo para realizar a tarefa
+  activeDeadlineSeconds: 15  # segundos de deadline do Job, caso passe disso, não serão mais criados pods
+
+
+# kubectl logs <nome do pod>  (mostra a saída de logs do Pod)
+# kubectl get job --watch  (comando get mas que vai mostrando atualizações)

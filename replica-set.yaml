@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+
+metadata:
+  name: replica7
+
+spec:
+  template: # definição do pod que será replicado
+    metadata:
+      name: webserver-legal
+      labels:
+        chupits: legal
+
+    spec:
+      containers:
+        - name: servidor-nginx
+          image: nginx
+  
+  selector: # seleciona qual pod deve ser controlado pelo ReplicaSet
+    matchLabels:
+      chupits: legal
+
+  replicas: 4

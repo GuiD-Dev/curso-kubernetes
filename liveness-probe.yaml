@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: live-pod
+
+spec:
+  containers:
+    - name: liveness-test
+      image: busybox
+      args:
+        - /bin/sh
+        - -c
+        - touch /tmp/healthy; sleep 30; rm -f /tmp/heathy; sleep 600
+
+    livenessProbe:
+      exec: # execução de validações para ver se o container está OK
+        command:
+          - cat
+          - /tmp/healthy
+        initialDelaySeccons: 5 # espera 4 segundos para excecutar a primera verificação
+        periodSeconds: 5 # executa a cada 5 segundos
+        failureThreshold: 3 # se a verificação falhar 3 vezes, deve ser reiniciado container

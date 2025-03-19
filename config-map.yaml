@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: config-map
+  namespace: default
+  
+data:
+  # Essas variáveis vão ser inseridas no ambiente do container dentro do pod
+  database: mysql
+  database_uri: mysql://localhost:3306
+
+  my.config: |
+    font.title: Arial
+    background-color: blue
+    theme.1: clean
+  
+  1theme.2: dark  # não é tem um nome válido para variáveis de ambiente Linux
+
+immutable: true  # deixa a config imutável
+
+---
+
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: pod-env
+
+spec:
+  containers:
+    - name: test-container
+      image: nginx
+      envFrom:
+        - configMapRef:
+            name: config-map

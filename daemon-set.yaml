@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: DaemonSet
+
+metadata:
+  name: daemon-set
+
+spec:
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 2  # indica que a atualização é de 2 em 2 pods
+
+  template:
+    metadata:
+      name: daemon-pod
+      labels:
+        nome: daemon-pod
+    
+    spec:
+      containers:
+        - name: my-container-nginx
+          image: nginx
+      
+      # nodeSelector:
+      #   disktype: ssd  # será criado apenas em nodes com a label = 'ssd'
+      
+      # nodeName: minikube  # especifica o nome do node onde quer criar esse Pod
+
+  selector:
+    matchLabels:
+      nome: daemon-pod 
+
+
+# kubectl get pod -o wide  (para ver várias informações do pod)
+# kubectl get nodes --show-labels
+# kubectl label nodes <nome-do-node> <nome-da-label>=<valor-da-label>

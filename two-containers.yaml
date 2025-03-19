@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: pod-two-containers
+
+spec:
+  containers:
+    - name: banco
+      image: tomcat
+    - name: server
+      image: nginx

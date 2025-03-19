@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: CronJob
+
+metadata:
+  name: cron-job
+
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: container-busybox
+              image: busybox
+              command:
+                - bin/sh
+                - -c
+                - for i in 1 2; do echo Lucky number $i = $((1 + RANDOM % 70)); done
+          restartPolicy: Never
+  
+      completions: 5  # vai realizar 5 execuções do job
+      completionMode: Indexed
+
+  failedJobsHistoryLimit: 5  # quantos jobs com falha ficam no histórico
+  successfulJobsHistoryLimit: 10  # quantos jobs com sucesso ficam no histórico
+
+  parallelism: 3  # mesmo uso que no job
+  suspend: true  # para suspender o cronjob
+
+
+# kubectl patch cj my-cronjob -p '{"spec" : {"suspend":true"}}'
