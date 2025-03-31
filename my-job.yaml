@@ -19,7 +19,7 @@ spec:
       restartPolicy: Never # posso usar apenas "OnFailure" ou "Never"
 
   completions: 10  # número de execuções que serão feitas pelo Job (cria um pod para cada execução)
-  completionMode: Indexed  # ao criar os pods, coloca um indice número no nome deles para facilitar a organização
+  completionMode: Indexed  # ao criar os pods, coloca um indice numérico no nome deles para facilitar a organização
   parallelism: 3  # número de pods que são instanciados ao mesmo tempo para realizar a tarefa
   activeDeadlineSeconds: 15  # segundos de deadline do Job, caso passe disso, não serão mais criados pods
 
