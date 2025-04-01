@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: my-endpoints-service  # precisa ter o mesmo nome do serviço que vai utilizá-lo
+subsets:
+  - addresses:  # quando há mais de um endpoint referenciado, exsite um balanceamento de carga
+      - ip: 10.244.0.26  # Apache
+      - ip: 10.244.0.27  # Nginx
+      - ip : 77.68.88.76  # IIS externo (rota fora do cluster)
+    ports:
+      - port: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-endpoints-service
+spec:
+  ports:
+    - protocol: TCP
+      port:  80
+      targetPort: 80
