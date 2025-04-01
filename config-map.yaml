@@ -15,7 +15,7 @@ data:
     background-color: blue
     theme.1: clean
   
-  1theme.2: dark  # não é tem um nome válido para variáveis de ambiente Linux
+  1theme.2: dark  # não é um nome válido para variáveis de ambiente Linux
 
 immutable: true  # deixa a config imutável
 
