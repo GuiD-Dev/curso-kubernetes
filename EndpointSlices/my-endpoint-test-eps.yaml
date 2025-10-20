@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-eps-service
+spec:
+  ports:
+    - name: http
+      port:  80
+
+---
+
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: my-eps  # com EndpointSlice, o nome não precisa ser igual ao do serviço
+  labels:
+    kubernetes.io/service-name: my-eps-service  # mas precisa ter essa label com o nome do serviço
+addressType: IPv4
+ports:
+  - name: http
+    port: 80
+    protocol: TCP
+endpoints:
+  - addresses:
+      - 10.244.0.31
+
+---
+
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: my-eps-2
+  labels:
+    kubernetes.io/service-name: my-eps-service
+addressType: IPv4
+ports:
+  - name: http
+    port: 80
+    protocol: TCP
+endpoints:
+  - addresses:
+      - 10.244.0.32
