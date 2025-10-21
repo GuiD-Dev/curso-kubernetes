@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jupyter
+  annotations: # são metadados personalizados, usadas para descrever informações, como usuários, aplicações, informação de versão, etc.
+    desc: "Namespace for Jupyter Notebooks Application"
+    proj: "Final Project K8s Course"
+    owner: "Guid-Dev"
+    phone: "+55 11 99999-9999" # pode ser útil ter a informação de contato do responsável pela aplicação
